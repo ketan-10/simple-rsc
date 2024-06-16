@@ -15,5 +15,7 @@ const root = createRoot(document.getElementById('root'));
  * and render results into the root element as they come in.
  */
 createFromFetch(fetch('/rsc')).then(comp => {
+  console.log("Printing :: ", comp);
+  debugger;
   root.render(comp);
 })

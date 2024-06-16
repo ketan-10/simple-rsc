@@ -1,0 +1,26 @@
+{
+    "/Users/ketan/code/simple-rsc/build/Like.jsdefault": {
+        "id": "/build/Like.js",
+        "name": "default",
+        "chunks": [],
+        "async": true
+    },
+    "/Users/ketan/code/simple-rsc/build/chunk-4DEA5GI6.js__commonJS": {
+        "id": "/build/chunk-4DEA5GI6.js",
+        "name": "__commonJS",
+        "chunks": [],
+        "async": true
+    },
+    "/Users/ketan/code/simple-rsc/build/chunk-4DEA5GI6.js__toESM": {
+        "id": "/build/chunk-4DEA5GI6.js",
+        "name": "__toESM",
+        "chunks": [],
+        "async": true
+    },
+    "/Users/ketan/code/simple-rsc/build/chunk-4DEA5GI6.jsrequire_react": {
+        "id": "/build/chunk-4DEA5GI6.js",
+        "name": "require_react",
+        "chunks": [],
+        "async": true
+    }
+}

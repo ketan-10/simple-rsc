@@ -8,6 +8,7 @@ import * as ReactServerDom from 'react-server-dom-webpack/server.browser';
 import { readFile, writeFile } from 'node:fs/promises';
 import { parse } from 'es-module-lexer';
 import { relative } from 'node:path';
+import fs from 'node:fs'
 
 const app = new Hono();
 const clientComponentMap = {};
@@ -68,7 +69,8 @@ async function build() {
 		logLevel: 'error',
 		entryPoints: [resolveApp('page.jsx')],
 		outdir: resolveBuild(),
-		// avoid bundling npm packages for server-side components
+		// avoid bundling npm packages for server-side components.
+		// as the lib will be running when we inject ./build/page.js to server render
 		packages: 'external',
 		plugins: [
 			{
@@ -134,6 +136,10 @@ async function build() {
 			// This tells your stream renderer to avoid rendering the
 			// client component server-side. Instead, import the built component
 			// client-side at `clientComponentMap[key].id`
+
+			// Ketan note: ./build/page.js(server component) have like.js(client component) import  
+			// when 'ReactServerDom.renderToReadableStream' finds that Like component have $$id and $$typeof properties it knows this is client component.
+			// then react server will render it as fetch call to /rsc with path found in 'clientComponentMap' 
 			newContents += `
 ${exp.ln}.$$id = ${JSON.stringify(key)};
 ${exp.ln}.$$typeof = Symbol.for("react.client.reference");
@@ -141,6 +147,8 @@ ${exp.ln}.$$typeof = Symbol.for("react.client.reference");
 		}
 		await writeFile(file.path, newContents);
 	});
+
+	fs.writeFile('clientComponentMap.json', JSON.stringify(clientComponentMap), (e) => console.log(e))
 }
 
 serve(app, async (info) => {
